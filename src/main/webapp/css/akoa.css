@@ -1,0 +1,25 @@
+
+h2{
+  font-size: 2em!important;
+  font-weight: 600!important;
+  letter-spacing: 0.0em!important;
+  margin: 0 0 0 0!important;
+  color: #000000;
+  text-align: center;
+  margin-bottom: 20px!important;
+}
+
+body{
+  margin-top: 5em;
+}
+
+img.title-icon{
+	display: block;
+  margin: 0 auto;
+}
+
+img.medal-icon{
+	display: block;
+  margin: 0 auto;
+  margin-top: 5em;
+}
