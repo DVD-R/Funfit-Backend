@@ -15,11 +15,11 @@ public class ProfileRequestJson{
 	private double weight;
 	private double height;
 	private String email;
-	
+	private String faction_description;
 	public ProfileRequestJson(){}
 	
 	public ProfileRequestJson(String firstname, String lastname, int age, String gender, String activitylevel,
-			double weight, double height, String email) {
+			double weight, double height, String email, String faction_description) {
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.age = age;
@@ -28,6 +28,7 @@ public class ProfileRequestJson{
 		this.weight = weight;
 		this.height = height;
 		this.email = email;
+		this.faction_description = faction_description;
 	}
 
 	
@@ -93,6 +94,16 @@ public class ProfileRequestJson{
 
 	public void setHeight(double height) {
 		this.height = height;
+	}
+	
+	
+
+	public String getFaction_description() {
+		return faction_description;
+	}
+
+	public void setFaction_description(String faction_description) {
+		this.faction_description = faction_description;
 	}
 
 	@Override
