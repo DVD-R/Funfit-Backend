@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funfit.usjr.thesis.backend.data.dao.service.FactionDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.HealthPreferenceDao;
@@ -16,7 +17,9 @@ import com.funfit.usjr.thesis.backend.data.dao.service.UserDao;
 import com.funfit.usjr.thesis.backend.models.Faction;
 import com.funfit.usjr.thesis.backend.models.HealthPreference;
 import com.funfit.usjr.thesis.backend.models.ProfileRequestJson;
+import com.funfit.usjr.thesis.backend.models.ResponseJson;
 import com.funfit.usjr.thesis.backend.models.User;
+import com.funfit.usjr.thesis.backend.service.NotificationService;
 import com.funfit.usjr.thesis.backend.service.ProfileService;
 
 /**
@@ -39,11 +42,14 @@ public class ProfileController {
 	@Autowired
 	FactionDao factionDao;
 	
+	@Autowired
+	NotificationService notificationService;
+	
 	@RequestMapping(value = "/initiate",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-	public void response(@RequestBody ProfileRequestJson profileRequestJson){
+	public @ResponseBody List<ResponseJson> response(@RequestBody ProfileRequestJson profileRequestJson){
 		List<ProfileRequestJson> userlist = new ArrayList<>();
 		userlist.add(profileRequestJson);
 		
@@ -80,6 +86,20 @@ public class ProfileController {
 		System.out.println(user.getFirstname());
 		System.out.println(user.getLastname());
 		
-//		return  profileService.generateResponse(profileRequestJson);
+		return  profileService.generateResponse(profileRequestJson);
+	}
+	
+	@RequestMapping(value = "/notification", method = RequestMethod.GET)
+	public void pushNotification(){
+		System.out.println("HELLO WORLD");
+
+		List<String> deviceId = new ArrayList<>();
+		deviceId.add("APA91bHXvT-J1X4bQIbZhJI0LB1ZPQdUneWW4rFjSF2QAzHwSDYDV6QYn-nOQZYZJSUhT1xi69XWYFiA_jqw4SSjSk82qT88lGywFWi-Snx8ZwWp2dDHH8xH0umZk8QbawhALuv1xmAC9x1VG1LEb-I-OfXZBkZDZA");
+		try {
+			notificationService.write(deviceId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+		}
 	}
 }
