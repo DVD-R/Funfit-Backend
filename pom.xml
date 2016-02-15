@@ -158,6 +158,13 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-runner</artifactId>
+			<version>8.1.16.v20140903</version>
+		</dependency>
+				
+		
+		<dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901-1.jdbc4</version>
@@ -190,32 +197,44 @@
 				</plugin>
 				
 				<plugin>
+					<groupId>org.mortbay.jetty</groupId>
+					<artifactId>jetty-maven-plugin</artifactId>
+					<version>8.1.4.v20120524</version>
+					<configuration>
+						<webAppConfig>
+							<contextPath>/${project.name}</contextPath>
+						</webAppConfig>
+					</configuration>
+				</plugin>
+				
+				<plugin>
 	                <groupId>com.google.appengine</groupId>
 	                <artifactId>appengine-maven-plugin</artifactId>
 	                <version>${appengine.target.version}</version>
             	</plugin>
-  			 <plugin>
-		            <groupId>org.apache.maven.plugins</groupId>
-		            <artifactId>maven-dependency-plugin</artifactId>
-		            <version>2.3</version>
-		            <executions>
-		                <execution>
-		                    <phase>package</phase>
-		                    <goals><goal>copy</goal></goals>
-		                    <configuration>
-		                        <artifactItems>
-		                            <artifactItem>
-		                                <groupId>com.github.jsimone</groupId>
-		                                <artifactId>webapp-runner</artifactId>
-		                                <version>8.0.24.0</version>
-		                                <destFileName>webapp-runner.jar</destFileName>
-		                            </artifactItem>
-		                        </artifactItems>
-		                    </configuration>
-		                </execution>
-		            </executions>
-		        </plugin>
-		        		</plugins>
+  			<plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-dependency-plugin</artifactId>
+      <version>2.3</version>
+      <executions>
+        <execution>
+          <phase>package</phase>
+          <goals><goal>copy</goal></goals>
+          <configuration>
+            <artifactItems>
+              <artifactItem>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-runner</artifactId>
+                <version>9.3.3.v20150827</version>
+                <destFileName>jetty-runner.jar</destFileName>
+              </artifactItem>
+            </artifactItems>
+          </configuration>
+        </execution>
+       </executions>
+    </plugin>
+
+       		</plugins>
 		</pluginManagement>
 
 		<finalName>FunfitBackendRestService</finalName>
