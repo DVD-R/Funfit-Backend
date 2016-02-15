@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Funfit</title>
@@ -28,10 +29,7 @@
 		$.ajax({
 			type:"GET",
 			url:"http://localhost:8081/funfit-backend/loginTransaction",
-			data:"username=" +username+ "&password=" +password,
-			success:function(response){
-				alert(response);
-			}
+			data:"username=" +username+ "&password=" +password
 		});
 	}
 	</script>
@@ -65,8 +63,8 @@
 									<input id="password"type="password" placeholder="Password">
 
 									<ul class="actions">
-										<li><a href="signup" class="button alt">Sign Up</a></li>
-										<li><input type="button" value="Login" class="button special" onclick="passParameter();"/></li>
+										<li><a href = "signup"><input type="button" value="Signup" class="button special"></a></li>
+										<li><a href = "dashboard"><input type="button" value="Login" class="button special" onclick="passParameter();"/></a></li>
 									</ul>
 								</div>
 								</section>

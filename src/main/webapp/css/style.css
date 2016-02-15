@@ -16,7 +16,7 @@ body {
 
 body, input, select, textarea {
 	color: #555f66;
-	font-family: "Roboto", Helvetica, sans-serif;
+	font-family: "Roboto", Helvetica, sans-serif !important;
 	font-size: 14pt;
 	font-weight: 300;
 	line-height: 1.75em;
@@ -478,7 +478,7 @@ input[type="radio"] + label:before {
 .image.fit {
 	display: block;
 	margin: 0 0 2em 0;
-	width: 80%;
+	width: 87%;
 	margin-left: auto;
 }
 
@@ -908,13 +908,13 @@ input[type="button"]:disabled,
 	color: #666f77;
 	font-weight: 500;
 	height: inherit;
-	left: 7em;
+	left: 3.1em;
 	line-height: inherit;
 	margin: 0;
 	padding: 0;
 	position: absolute;
 	top: 0;
-	margin-top: 18px;
+	margin-top: 15px;
 }
 
 #header h1 a {
@@ -928,8 +928,8 @@ input[type="button"]:disabled,
 	right: 1.25em;
 	top: 0;
 	vertical-align: middle;
-	margin-top: 16px;
-	margin-right: 6em;
+	margin-top: 20px;
+	margin-right: 7em;
 	text-transform: uppercase;
 }
 

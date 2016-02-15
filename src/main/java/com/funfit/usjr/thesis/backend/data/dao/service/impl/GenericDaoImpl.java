@@ -72,5 +72,17 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 
 	protected Session getCurrentSession(){
 		return sessionFactory.getCurrentSession();
+	}
+
+	@Override
+	public T showUser(String id) {
+		// TODO Auto-generated method stub
+		return getCurrentSession().get(thisClass, id);
+	}
+
+	@Override
+	public T show1(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

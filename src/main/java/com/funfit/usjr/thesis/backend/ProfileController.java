@@ -13,12 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.funfit.usjr.thesis.backend.data.dao.service.FactionDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.HealthPreferenceDao;
+import com.funfit.usjr.thesis.backend.data.dao.service.ImpulseDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.UserDao;
+import com.funfit.usjr.thesis.backend.data.dao.service.VelocityDao;
 import com.funfit.usjr.thesis.backend.models.Faction;
 import com.funfit.usjr.thesis.backend.models.HealthPreference;
+import com.funfit.usjr.thesis.backend.models.Impulse;
 import com.funfit.usjr.thesis.backend.models.ProfileRequestJson;
-import com.funfit.usjr.thesis.backend.models.ResponseJson;
+import com.funfit.usjr.thesis.backend.models.Rdi;
 import com.funfit.usjr.thesis.backend.models.User;
+import com.funfit.usjr.thesis.backend.models.Velocity;
 import com.funfit.usjr.thesis.backend.service.NotificationService;
 import com.funfit.usjr.thesis.backend.service.ProfileService;
 
@@ -45,21 +49,48 @@ public class ProfileController {
 	@Autowired
 	NotificationService notificationService;
 	
+	@Autowired
+	private VelocityDao velocityDao;
+	
+	@Autowired
+	private ImpulseDao impulseDao;
+
 	@RequestMapping(value = "/initiate",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-	public @ResponseBody List<ResponseJson> response(@RequestBody ProfileRequestJson profileRequestJson){
+	public @ResponseBody List<Rdi> response(@RequestBody ProfileRequestJson profileRequestJson){
 		List<ProfileRequestJson> userlist = new ArrayList<>();
 		userlist.add(profileRequestJson);
+	
 		
 		User user = null;
 		HealthPreference healthPreference = null;
 		Faction faction = null;
+		List<Velocity> v = velocityDao.index();
+		List<Impulse> i = impulseDao.index();
+		Velocity velocity = null;
+		Impulse impulse = null;
+		
+		for(Velocity vl: v){
+		velocity = new Velocity();	
+		velocity.setId(vl.getId());
+		velocity.setClusterName(vl.getClusterName());
+		}
+		
+		for(Impulse imp: i){
+			impulse = new Impulse();
+			impulse.setId(imp.getId());
+			impulse.setClusterName(imp.getClusterName());
+		}
+
+		
 		for(ProfileRequestJson prof: userlist){
 			user = new User();
 			faction = new Faction();
+		
 			healthPreference = new HealthPreference();
+			user.setId(prof.getId());
 			user.setLastname(prof.getLastname());
 			user.setFirstname(prof.getFirstname());
 			user.setEmail(prof.getEmail());
@@ -72,21 +103,30 @@ public class ProfileController {
 			healthPreference.setWeight(prof.getWeight());
 			healthPreference.setUser(user);
 			
-			faction.setUser(user);
-			faction.setFaction_description(prof.getFaction_description());
+			if(prof.getFaction_description().equals("velocity")){
+				faction.setUser(prof.getId());
+				faction.setFaction_description(prof.getFaction_description());
+				faction.setVelocity(velocity);
+			}else if(prof.getFaction_description().equals("impulse")){
+				faction.setUser(profileRequestJson.getId());
+				faction.setFaction_description(prof.getFaction_description());
+				faction.setImpulse(impulse);	
+			}
 		}
+		User checking = userDao.showUser(profileRequestJson.getId());
 		
 		userDao.create(user);
-		User check = userDao.show(1);
-		if(check != null){
+		if(checking == null){
 			healthPreferenceDao.create(healthPreference);
 			factionDao.create(faction);
 		}
 		
 		System.out.println(user.getFirstname());
 		System.out.println(user.getLastname());
+	
+		Faction f = factionDao.query(profileRequestJson.getId());
 		
-		return  profileService.generateResponse(profileRequestJson);
+		return  profileService.generateResponse(profileRequestJson , f.getId());
 	}
 	
 	@RequestMapping(value = "/notification", method = RequestMethod.GET)
@@ -102,4 +142,5 @@ public class ProfileController {
 			System.out.println(e);
 		}
 	}
+	
 }

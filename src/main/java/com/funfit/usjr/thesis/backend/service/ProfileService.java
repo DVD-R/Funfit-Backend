@@ -1,13 +1,11 @@
 package com.funfit.usjr.thesis.backend.service;
 
 import java.util.List;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.funfit.usjr.thesis.backend.models.ProfileRequestJson;
-import com.funfit.usjr.thesis.backend.models.ResponseJson;
+import com.funfit.usjr.thesis.backend.models.Rdi;
 
 
 public interface ProfileService {
-	List<ResponseJson> generateResponse(ProfileRequestJson profileRequestJson);
+	List<Rdi> generateResponse(ProfileRequestJson profileRequestJson, int faction_id);
 }

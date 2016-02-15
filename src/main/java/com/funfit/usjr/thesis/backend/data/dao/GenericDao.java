@@ -14,7 +14,11 @@ public interface GenericDao<T> {
 	
 	public boolean create(T data);
 	
+	public T show1(int id);
+	
 	public T show(long id);
+	
+	public T showUser(String id);
 	
 	public boolean update(T data);
 	

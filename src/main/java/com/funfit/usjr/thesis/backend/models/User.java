@@ -11,9 +11,9 @@ import javax.persistence.Table;
 @Table(name = "user")
 public class User implements Serializable{
 
-	@Id @GeneratedValue
+	@Id
 	@Column(name = "id")
-	private long id;
+	private String id;
 
 	@Column(name = "firstname", nullable = false)
 	private String firstname;
@@ -32,7 +32,7 @@ public class User implements Serializable{
 
 	public User(){}
 	
-	public User(long id, String firstname, String lastname, String email, String gender, int age) {
+	public User(String id, String firstname, String lastname, String email, String gender, int age) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -42,11 +42,11 @@ public class User implements Serializable{
 		this.age = age;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

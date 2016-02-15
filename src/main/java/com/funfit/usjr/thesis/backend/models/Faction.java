@@ -14,28 +14,34 @@ import javax.persistence.Table;
 @Table(name = "faction")
 public class Faction implements Serializable{
 
-	@Id	@GeneratedValue
+	@Id
 	private int id;
 	
 	@Column(name = "faction_description")
 	private String faction_description;
+		
 	
-	@ManyToOne
-	@JoinColumn(name = "territory_id", referencedColumnName = "id")
-	private Territory territory;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+	@Column(name = "user_id")
+	private String user_id;
 
-	public Faction(){}
+	@ManyToOne
+	@JoinColumn(name = "impulse_id", referencedColumnName = "id")
+	private Impulse impulse;
 	
-	public Faction(int id, String faction_description, Territory territory, User user) {
+	@ManyToOne
+	@JoinColumn(name = "velocity_id", referencedColumnName = "id")
+	private Velocity velocity;
+	
+	public Faction(){}
+
+	public Faction(int id, String faction_description, String user_id, Impulse impulse, Velocity velocity) {
 		super();
 		this.id = id;
 		this.faction_description = faction_description;
-		this.territory = territory;
-		this.user = user;
+		this.user_id = user_id;
+		this.impulse = impulse;
+		this.velocity = velocity;
 	}
 
 	public int getId() {
@@ -54,19 +60,27 @@ public class Faction implements Serializable{
 		this.faction_description = faction_description;
 	}
 
-	public Territory getTerritory() {
-		return territory;
+	public String getUser() {
+		return user_id;
 	}
 
-	public void setTerritory(Territory territory) {
-		this.territory = territory;
+	public void setUser(String user_id) {
+		this.user_id = user_id;
 	}
 
-	public User getUser() {
-		return user;
+	public Impulse getImpulse() {
+		return impulse;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setImpulse(Impulse impulse) {
+		this.impulse = impulse;
+	}
+
+	public Velocity getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Velocity velocity) {
+		this.velocity = velocity;
 	}
 }

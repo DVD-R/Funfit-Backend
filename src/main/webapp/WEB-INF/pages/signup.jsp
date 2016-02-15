@@ -31,13 +31,7 @@
 			type:"GET",
 			url:"http://localhost:8081/funfit-backend/signupTransaction",
 			data:"username=" +username+ "&password=" +password+ "&confirmPassword="
-			+confirmPassword+ "&email="+email,
-			success:function(response){
-				alert(response);
-			},
-			error:function(e){
-				alert('Error:'+ e);
-			}
+			+confirmPassword+ "&email="+email
 		});
 	}
 	</script>
@@ -75,7 +69,7 @@
 
 									<ul class="actions">
 										<li><a href="login" class="button alt">Login</a></li>
-										<li><input type="button" value ="Signup" class="button special" onclick="passParameter();"/></li>
+										<li><a href ="login"><input type="button" value ="Signup" class="button special" onclick="passParameter();"/></a></li>
 									</ul>
 								</div>
 								</section>

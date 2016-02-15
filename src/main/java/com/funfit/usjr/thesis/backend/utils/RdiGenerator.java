@@ -11,16 +11,16 @@ public class RdiGenerator {
 		double RDI = 0;
 		
 		switch(activityLevel){
-		case "Sendatary":
+		case "sendatary":
 			RDI = BMR * 1.2;
 			break;
-		case "Low Active":
+		case "low active":
 			RDI = BMR * 1.375;
 			break;
-		case "Active":
+		case "active":
 			RDI = BMR * 1.55;
 			break;
-		case "Very Active":
+		case "very active":
 			RDI = BMR * 1.725;
 			break;
 		}
@@ -33,16 +33,16 @@ public class RdiGenerator {
 		double RDI = 0;
 		
 		switch(activityLevel){
-		case "Sendatary":
+		case "sedentary":
 			RDI = BMR * 1.2;
 			break;
-		case "Low Active":
+		case "low active":
 			RDI = BMR * 1.375;
 			break;
-		case "Active":
+		case "active":
 			RDI = BMR * 1.55;
 			break;
-		case "Very Active":
+		case "very active":
 			RDI = BMR * 1.725;
 			break;
 		}
