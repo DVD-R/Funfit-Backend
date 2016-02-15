@@ -35,6 +35,7 @@ public class AppConfig extends WebMvcConfigurerAdapter{
 		        registry.addResourceHandler("/main/webapp/css/**").addResourceLocations("/main/webapp/css/*");
 		        registry.addResourceHandler("/main/webapp/images/**").addResourceLocations("/main/webapp/images/*");
 		        registry.addResourceHandler("/main/webapp/fonts/**").addResourceLocations("/main/webapp/fonts/*");
+		        registry.addResourceHandler("/main/webapp/less/**").addResourceLocations("/main/webapp/less/*");
 		 }
 
 }
