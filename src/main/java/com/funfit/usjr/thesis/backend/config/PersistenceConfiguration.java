@@ -36,9 +36,9 @@ public class PersistenceConfiguration {
 	@Bean
 	public DataSource restDataSource(){
 		final BasicDataSource dataSource = new BasicDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:8080/funfit");
-		dataSource.setUsername("root");
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/funfit");
+		dataSource.setUsername("postgres");
 		dataSource.setPassword("Philippines");
 		return dataSource;
 	}
@@ -58,10 +58,10 @@ public class PersistenceConfiguration {
 	
 	final Properties hibernateProperties(){
 		final Properties hibernateProperties = new Properties();
-		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL82Dialect");
 		hibernateProperties.setProperty("hibernate.show_sql", "true");
         hibernateProperties.setProperty("hibernate.format_sql", "true");
-//        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         return hibernateProperties;
 	}
 }
