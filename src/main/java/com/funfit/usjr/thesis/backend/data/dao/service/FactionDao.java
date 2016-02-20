@@ -8,5 +8,5 @@ import com.funfit.usjr.thesis.backend.models.RefurbishMarker;
 @Transactional
 public interface FactionDao extends GenericDao<Faction>{
 	public Faction checkClusterUser(RefurbishMarker refurbishMarker);
-	public Faction query(String id);
+	public Faction query(int id);
 }

@@ -8,7 +8,8 @@ import java.io.Serializable;
  *
  */
 public class ProfileRequestJson implements Serializable{
-	private String id;
+
+	private String userId;
 	private String firstname;
 	private String lastname;
 	private int age;
@@ -18,11 +19,12 @@ public class ProfileRequestJson implements Serializable{
 	private double height;
 	private String email;
 	private String faction_description;
+	private String gcmKey;
 
 	public ProfileRequestJson(){}
 
-	public ProfileRequestJson(String id ,String firstname, String lastname, int age, String gender, String activitylevel, double weight, double height, String email, String faction_description){
-		this.setId(id);
+	public ProfileRequestJson(String userId ,String firstname, String lastname, int age, String gender, String activitylevel, double weight, double height, String email, String faction_description, String gcmKey){
+		this.userId = userId;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.age = age;
@@ -32,6 +34,7 @@ public class ProfileRequestJson implements Serializable{
 		this.height = height;
 		this.email = email;
 		this.faction_description = faction_description;
+		this.gcmKey = gcmKey;
 	}
 
 
@@ -107,12 +110,20 @@ public class ProfileRequestJson implements Serializable{
 		this.faction_description = faction_description;
 	}
 
-	public String getId() {
-		return id;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public void setGcmKey(String gcmKey){
+		this.gcmKey = gcmKey;
+	}
+
+	public String getGcmKey(){
+		return gcmKey;
 	}
 
 }

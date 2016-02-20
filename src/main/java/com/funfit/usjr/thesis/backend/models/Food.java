@@ -19,7 +19,7 @@ public class Food implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+	private Users user;
 	
 	@Column(name = "food_name", nullable = false)
 	private String food_name;
@@ -95,7 +95,7 @@ public class Food implements Serializable{
 
 	public Food(){}
 	
-	public Food(int id, User user, String food_name, String calcium, String calories, String carbohydrate,
+	public Food(int id, Users user, String food_name, String calcium, String calories, String carbohydrate,
 			String cholesterol, String fat, String fiber, String iron, String measurement_description,
 			String metric_serving_amount, String metric_serving_unit, String monounsaturated_fat,
 			String number_of_units, String polyunsaturated_fat, String potassium, String protein, String saturated_fat,
@@ -138,11 +138,11 @@ public class Food implements Serializable{
 		this.id = id;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

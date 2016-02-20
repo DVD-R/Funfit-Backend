@@ -3,32 +3,30 @@ package com.funfit.usjr.thesis.backend.models;
 import java.io.Serializable;
 
 public class Rdi implements Serializable{
-private double Rdi;
-private int faction_id;
+	private double rdi;
+	private int userId;
 
-public Rdi(){}
+	public Rdi(){}
 
-public Rdi(double rdi, int faction_id) {
-	super();
-	Rdi = rdi;
-	this.faction_id = faction_id;
-}
+	public Rdi(double rdi, int userId) {
+		super();
+		this.rdi = rdi;
+		this.userId = userId;
+	}
 
-public double getRdi() {
-	return Rdi;
-}
+	public double getRdi() {
+		return rdi;
+	}
 
-public void setRdi(double rdi) {
-	Rdi = rdi;
-}
+	public void setRdi(double rdi) {
+		this.rdi = rdi;
+	}
 
-public int getFaction_id() {
-	return faction_id;
-}
+	public int getUserId() {
+		return userId;
+	}
 
-public void setFaction_id(int faction_id) {
-	this.faction_id = faction_id;
-}
-
-
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 }

@@ -7,5 +7,5 @@ import com.funfit.usjr.thesis.backend.models.Rdi;
 
 
 public interface ProfileService {
-	List<Rdi> generateResponse(ProfileRequestJson profileRequestJson, int faction_id);
+	Rdi generateResponse(ProfileRequestJson profileRequestJson);
 }

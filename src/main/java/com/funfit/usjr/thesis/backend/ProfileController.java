@@ -21,8 +21,9 @@ import com.funfit.usjr.thesis.backend.models.HealthPreference;
 import com.funfit.usjr.thesis.backend.models.Impulse;
 import com.funfit.usjr.thesis.backend.models.ProfileRequestJson;
 import com.funfit.usjr.thesis.backend.models.Rdi;
-import com.funfit.usjr.thesis.backend.models.User;
+import com.funfit.usjr.thesis.backend.models.Users;
 import com.funfit.usjr.thesis.backend.models.Velocity;
+import com.funfit.usjr.thesis.backend.service.GenerateIdService;
 import com.funfit.usjr.thesis.backend.service.NotificationService;
 import com.funfit.usjr.thesis.backend.service.ProfileService;
 
@@ -55,16 +56,20 @@ public class ProfileController {
 	@Autowired
 	private ImpulseDao impulseDao;
 
+	@Autowired
+	private GenerateIdService generateIdService;
+	
 	@RequestMapping(value = "/initiate",
 			consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE,
 			method = RequestMethod.POST)
-	public @ResponseBody List<Rdi> response(@RequestBody ProfileRequestJson profileRequestJson){
+	public @ResponseBody Rdi response(@RequestBody ProfileRequestJson profileRequestJson){
+		System.out.println(profileRequestJson.getUserId());
 		List<ProfileRequestJson> userlist = new ArrayList<>();
 		userlist.add(profileRequestJson);
 	
 		
-		User user = null;
+		Users user = null;
 		HealthPreference healthPreference = null;
 		Faction faction = null;
 		List<Velocity> v = velocityDao.index();
@@ -86,16 +91,17 @@ public class ProfileController {
 
 		
 		for(ProfileRequestJson prof: userlist){
-			user = new User();
+			user = new Users();
 			faction = new Faction();
 		
 			healthPreference = new HealthPreference();
-			user.setId(prof.getId());
+			user.setId(Integer.parseInt(prof.getUserId()));
 			user.setLastname(prof.getLastname());
 			user.setFirstname(prof.getFirstname());
 			user.setEmail(prof.getEmail());
 			user.setGender(prof.getGender());
 			user.setAge(prof.getAge());
+			user.setGcmKey(prof.getGcmKey());
 			
 			//HEALTHPREFERCED TRANSACTIONS
 			healthPreference.setActivity_level(prof.getActivitylevel());
@@ -104,30 +110,34 @@ public class ProfileController {
 			healthPreference.setUser(user);
 			
 			if(prof.getFaction_description().equals("velocity")){
-				faction.setUser(prof.getId());
+				faction.setId(generateIdService.generateId());
+				faction.setUser(Integer.parseInt(prof.getUserId()));
 				faction.setFaction_description(prof.getFaction_description());
 				faction.setVelocity(velocity);
 			}else if(prof.getFaction_description().equals("impulse")){
-				faction.setUser(profileRequestJson.getId());
+				faction.setId(generateIdService.generateId());
+				faction.setUser(Integer.parseInt(profileRequestJson.getUserId()));
 				faction.setFaction_description(prof.getFaction_description());
 				faction.setImpulse(impulse);	
 			}
 		}
-		User checking = userDao.showUser(profileRequestJson.getId());
+		Users checking = userDao.show(Integer.parseInt(profileRequestJson.getUserId()));
+		boolean flag = userDao.checkEmail(profileRequestJson.getEmail());
 		
+		if(flag){
 		userDao.create(user);
+		}
+		
 		if(checking == null){
 			healthPreferenceDao.create(healthPreference);
 			factionDao.create(faction);
 		}
 		
-		System.out.println(user.getFirstname());
-		System.out.println(user.getLastname());
-	
-		Faction f = factionDao.query(profileRequestJson.getId());
+		Faction f = factionDao.query(Integer.parseInt(profileRequestJson.getUserId()));
 		
-		return  profileService.generateResponse(profileRequestJson , f.getId());
+		return  profileService.generateResponse(profileRequestJson);
 	}
+	
 	
 	@RequestMapping(value = "/notification", method = RequestMethod.GET)
 	public void pushNotification(){
@@ -136,11 +146,10 @@ public class ProfileController {
 		List<String> deviceId = new ArrayList<>();
 		deviceId.add("APA91bHXvT-J1X4bQIbZhJI0LB1ZPQdUneWW4rFjSF2QAzHwSDYDV6QYn-nOQZYZJSUhT1xi69XWYFiA_jqw4SSjSk82qT88lGywFWi-Snx8ZwWp2dDHH8xH0umZk8QbawhALuv1xmAC9x1VG1LEb-I-OfXZBkZDZA");
 		try {
-			notificationService.write(deviceId);
+			notificationService.broadcast(deviceId);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			System.out.println(e);
 		}
 	}
-	
 }

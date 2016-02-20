@@ -11,7 +11,7 @@ public class RdiGenerator {
 		double RDI = 0;
 		
 		switch(activityLevel){
-		case "sendatary":
+		case "sedentary":
 			RDI = BMR * 1.2;
 			break;
 		case "low active":

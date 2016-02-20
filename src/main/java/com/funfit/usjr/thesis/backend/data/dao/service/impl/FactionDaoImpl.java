@@ -39,7 +39,7 @@ public class FactionDaoImpl extends GenericDaoImpl<Faction> implements FactionDa
 	}
 
 	@Override
-	public Faction query(String id) {
+	public Faction query(int id) {
 		// TODO Auto-generated method stub
 		String hql = "select f from Faction f where f.user_id = :user_id";
 		List<Faction> query = getCurrentSession().createQuery(hql)

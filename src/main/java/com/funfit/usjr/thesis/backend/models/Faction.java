@@ -23,7 +23,7 @@ public class Faction implements Serializable{
 	
 	
 	@Column(name = "user_id")
-	private String user_id;
+	private int user_id;
 
 	@ManyToOne
 	@JoinColumn(name = "impulse_id", referencedColumnName = "id")
@@ -35,7 +35,7 @@ public class Faction implements Serializable{
 	
 	public Faction(){}
 
-	public Faction(int id, String faction_description, String user_id, Impulse impulse, Velocity velocity) {
+	public Faction(int id, String faction_description, int user_id, Impulse impulse, Velocity velocity) {
 		super();
 		this.id = id;
 		this.faction_description = faction_description;
@@ -60,11 +60,11 @@ public class Faction implements Serializable{
 		this.faction_description = faction_description;
 	}
 
-	public String getUser() {
+	public int getUser() {
 		return user_id;
 	}
 
-	public void setUser(String user_id) {
+	public void setUser(int user_id) {
 		this.user_id = user_id;
 	}
 

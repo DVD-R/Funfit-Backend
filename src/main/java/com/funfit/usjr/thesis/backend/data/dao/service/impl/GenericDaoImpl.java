@@ -45,7 +45,7 @@ public class GenericDaoImpl<T> implements GenericDao<T>{
 	}
 
 	@Override
-	public T show(long id) {
+	public T show(int id) {
 		// TODO Auto-generated method stub
 		return getCurrentSession().get(thisClass, id);
 	}

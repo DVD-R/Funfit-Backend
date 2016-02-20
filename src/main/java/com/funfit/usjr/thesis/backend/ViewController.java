@@ -1,8 +1,9 @@
 package com.funfit.usjr.thesis.backend;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.StringTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -10,17 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.funfit.usjr.thesis.backend.data.dao.service.AdminDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.EventDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.ImpulseDao;
-import com.funfit.usjr.thesis.backend.data.dao.service.MarkerDao;
+import com.funfit.usjr.thesis.backend.data.dao.service.TerritoryDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.VelocityDao;
 import com.funfit.usjr.thesis.backend.models.Admin;
 import com.funfit.usjr.thesis.backend.models.Event;
 import com.funfit.usjr.thesis.backend.models.Impulse;
-import com.funfit.usjr.thesis.backend.models.Marker;
+import com.funfit.usjr.thesis.backend.models.Territory;
 import com.funfit.usjr.thesis.backend.models.Velocity;
+import com.funfit.usjr.thesis.backend.service.GenerateIdService;
+import com.funfit.usjr.thesis.backend.utils.CreatePolyline;
+import com.google.maps.model.LatLng;
 
 @Controller
 public class ViewController {
@@ -35,10 +38,13 @@ public class ViewController {
 	private AdminDao adminDao;
 	
 	@Autowired
-	private MarkerDao markerDao;
+	private EventDao eventDao;
 	
 	@Autowired
-	private EventDao eventDao;
+	private GenerateIdService generateIdService;
+	
+	@Autowired
+	private TerritoryDao territoryDao;
 	
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	@RequestMapping(value = "/")
@@ -120,19 +126,45 @@ public class ViewController {
 		return "redirect:/login";
 	}
 	
-	@RequestMapping(value = "/createMarker", method = RequestMethod.GET)
+	@RequestMapping(value = "/forgeTerritory", method = RequestMethod.GET)
 	public String createMarker(@RequestParam(value = "locationName") String locationName,
 							   @RequestParam(value = "latitude") double latitude,
-							   @RequestParam(value = "longitude") double longitude){
+							   @RequestParam(value = "longitude") double longitude,
+							   @RequestParam(value = "vertices") String vertices){
 		
-		
-		Marker marker = new Marker();
-		marker.setName(locationName);
-		marker.setLat(latitude);
-		marker.setLng(longitude);
-		marker.setLvl(0);
-		marker.setCluster_name(null);
-		markerDao.create(marker);
+		   Territory territory = new Territory();
+		   int counter = 0;
+		   String delimiters = "(,)";
+		   LatLng latlng = null;
+		   List<Double> listLatitude = new ArrayList<>();
+		   List<Double> listLongitude = new ArrayList<>();
+		   ArrayList<LatLng> listLatLng = new ArrayList<>();
+		   CreatePolyline c = new CreatePolyline();
+		   	StringTokenizer stringTokenizer = new StringTokenizer(vertices, delimiters);
+		  	while(stringTokenizer.hasMoreTokens()){
+		  		counter++;
+		  		if(counter%2 == 1){
+		  			listLatitude.add(Double.parseDouble(stringTokenizer.nextToken()));
+		  		}else{
+		  			listLongitude.add(Double.parseDouble(stringTokenizer.nextToken()));
+		  		}
+		  	}
+		   	
+		  	for(int i = 0; i < listLatitude.size(); i++){
+		  		latlng = new LatLng(listLatitude.get(i).doubleValue(), listLongitude.get(i).doubleValue());
+		  		listLatLng.add(latlng);
+		  	}
+		  	
+		  	String encodedPolyline = c.create(listLatLng);
+		  	System.out.println(encodedPolyline);
+		  	
+		  	territory.setId(generateIdService.generateId());
+		  	territory.setEncoded_polyline(encodedPolyline);
+		  	territory.setLevel(0);
+		  	territory.setStatus("uncharted");
+		  	
+		  	territoryDao.create(territory);
+		  	
 		return "marker";
 	}
 	
