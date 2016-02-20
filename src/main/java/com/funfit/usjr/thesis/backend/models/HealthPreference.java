@@ -20,7 +20,7 @@ public class HealthPreference implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+	private Users user;
 	
 	@Column(name = "activity_level", nullable = false)
 	private String activity_level;
@@ -33,7 +33,7 @@ public class HealthPreference implements Serializable{
 
 	public HealthPreference(){}
 	
-	public HealthPreference(int id, User user, String activity_level, double weight, double height) {
+	public HealthPreference(int id, Users user, String activity_level, double weight, double height) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -50,11 +50,11 @@ public class HealthPreference implements Serializable{
 		this.id = id;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 

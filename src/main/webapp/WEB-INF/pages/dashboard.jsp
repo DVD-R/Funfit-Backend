@@ -32,7 +32,7 @@
 <script>
 
 
-var service = 'http://192.168.43.134:8081/funfit-backend';
+var service = 'http://172.17.0.75:8081/funfit-backend';
 var i = 0;
 
 $(document).ready(function(){

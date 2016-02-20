@@ -21,9 +21,9 @@ public class Participant implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+	private Users user;
 
-	public Participant(int p_id, Event event, User user) {
+	public Participant(int p_id, Event event, Users user) {
 		super();
 		this.p_id = p_id;
 		this.event = event;
@@ -46,11 +46,11 @@ public class Participant implements Serializable{
 		this.event = event;
 	}
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 	

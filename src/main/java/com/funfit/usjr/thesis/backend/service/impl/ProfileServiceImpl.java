@@ -21,7 +21,7 @@ public class ProfileServiceImpl implements ProfileService{
 	private CreatePolyline createPolyline;
 	
 	@Override
-	public List<Rdi> generateResponse(ProfileRequestJson profileRequestJson, int faction_id) {
+	public Rdi generateResponse(ProfileRequestJson profileRequestJson) {
 		// TODO Auto-generated method stub
 		int age = profileRequestJson.getAge();
 		double weight = profileRequestJson.getWeight();
@@ -47,11 +47,8 @@ public class ProfileServiceImpl implements ProfileService{
 				
 		Rdi rdi = new Rdi();
 		rdi.setRdi(RDI);
-		rdi.setFaction_id(faction_id);
-		System.out.println(rdi.getRdi());
-		List<Rdi> rd = new ArrayList();
-		rd.add(rdi);
-		return rd;
+		rdi.setUserId(Integer.parseInt(profileRequestJson.getUserId()));
+		return rdi;
 	}
 	
 	

@@ -16,7 +16,7 @@ public interface GenericDao<T> {
 	
 	public T show1(int id);
 	
-	public T show(long id);
+	public T show(int id);
 	
 	public T showUser(String id);
 	

@@ -19,7 +19,7 @@ import com.google.android.gcm.server.Sender;
 
 @Service("notificationService")
 @Transactional
-public class NotificationItemWriter implements InitializingBean , NotificationService{
+public class NotificationServiceImpl implements InitializingBean , NotificationService{
 	
 	
     /** Api Key to access GCM <should be externalised> */
@@ -48,7 +48,7 @@ public class NotificationItemWriter implements InitializingBean , NotificationSe
 		messageToSend = mb.build();
 	}
 
-public void write(List<String> items) throws Exception {
+public void broadcast(List<String> items) throws Exception {
 		
 		List<String> devices = new ArrayList<String>(items);
 		List<Result> results;

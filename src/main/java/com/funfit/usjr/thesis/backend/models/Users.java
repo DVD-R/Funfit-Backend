@@ -8,12 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
-public class User implements Serializable{
+@Table(name = "users")
+public class Users implements Serializable{
 
 	@Id
 	@Column(name = "id")
-	private String id;
+	private int id;
 
 	@Column(name = "firstname", nullable = false)
 	private String firstname;
@@ -30,9 +30,12 @@ public class User implements Serializable{
 	@Column(name = "age", nullable = false)
 	private int age;
 
-	public User(){}
+	@Column(name = "gcmKey", nullable = false)
+	private String gcmKey;
 	
-	public User(String id, String firstname, String lastname, String email, String gender, int age) {
+	public Users(){}
+	
+	public Users(int id, String firstname, String lastname, String email, String gender, int age, String gcmKey) {
 		super();
 		this.id = id;
 		this.firstname = firstname;
@@ -40,13 +43,14 @@ public class User implements Serializable{
 		this.email = email;
 		this.gender = gender;
 		this.age = age;
+		this.gcmKey = gcmKey;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -90,4 +94,11 @@ public class User implements Serializable{
 		this.age = age;
 	}
 		
+	public String getGcmKey(){
+		return gcmKey;
+	}
+	
+	public void setGcmKey(String gcmKey){
+		this.gcmKey = gcmKey;
+	}
 }

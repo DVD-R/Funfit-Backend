@@ -15,13 +15,13 @@ import javax.persistence.Table;
 @Table(name = "territory")
 public class Territory implements Serializable{
 
-	@Id @GeneratedValue
+	@Id
 	@Column(name = "id")
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User user;
+	@JoinColumn(name = "faction_id", referencedColumnName = "id")
+	private Faction faction;
 	
 	@Column(name = "encoded_polyline", nullable = false)
 	private String encoded_polyline;
@@ -32,15 +32,19 @@ public class Territory implements Serializable{
 	@Column(name = "time_stamp")
 	private Date time_stamp;
 
+	@Column(name = "level")
+	private int level;
+	
 	public Territory(){}
 	
-	public Territory(int id, User user, String encoded_polyline, String status, Date time_stamp) {
+	public Territory(int id, Faction faction, String encoded_polyline, String status, Date time_stamp, int level) {
 		super();
 		this.id = id;
-		this.user = user;
+		this.faction = faction;
 		this.encoded_polyline = encoded_polyline;
 		this.status = status;
 		this.time_stamp = time_stamp;
+		this.level = level;
 	}
 
 	public int getId() {
@@ -51,12 +55,12 @@ public class Territory implements Serializable{
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public Faction getFaction() {
+		return faction;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setFaction(Faction faction) {
+		this.faction = faction;
 	}
 
 	public String getEncoded_polyline() {
@@ -81,5 +85,13 @@ public class Territory implements Serializable{
 
 	public void setTime_stamp(Date time_stamp) {
 		this.time_stamp = time_stamp;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}	
 }
