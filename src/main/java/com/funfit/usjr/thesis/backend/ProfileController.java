@@ -35,6 +35,8 @@ import com.funfit.usjr.thesis.backend.service.ProfileService;
 @Controller
 public class ProfileController {
 	
+	private boolean flag2 = true;
+
 	@Autowired
 	ProfileService profileService;
 	
@@ -123,12 +125,10 @@ public class ProfileController {
 		}
 		Users checking = userDao.show(Integer.parseInt(profileRequestJson.getUserId()));
 		boolean flag = userDao.checkEmail(profileRequestJson.getEmail());
-		
-		if(flag){
-		userDao.create(user);
-		}
+	
 		
 		if(checking == null){
+			userDao.create(user);
 			healthPreferenceDao.create(healthPreference);
 			factionDao.create(faction);
 		}

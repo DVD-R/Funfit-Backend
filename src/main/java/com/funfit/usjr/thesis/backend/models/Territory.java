@@ -35,9 +35,12 @@ public class Territory implements Serializable{
 	@Column(name = "level")
 	private int level;
 	
+	@Column(name = "faction_description")
+	private String faction_description;
+	
 	public Territory(){}
 	
-	public Territory(int id, Faction faction, String encoded_polyline, String status, Date time_stamp, int level) {
+	public Territory(int id, Faction faction, String encoded_polyline, String status, Date time_stamp, int level,String faction_description) {
 		super();
 		this.id = id;
 		this.faction = faction;
@@ -45,6 +48,7 @@ public class Territory implements Serializable{
 		this.status = status;
 		this.time_stamp = time_stamp;
 		this.level = level;
+		this.faction_description = faction_description;
 	}
 
 	public int getId() {
@@ -93,5 +97,14 @@ public class Territory implements Serializable{
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public String getFaction_description() {
+		return faction_description;
+	}
+
+	public void setFaction_description(String faction_description) {
+		this.faction_description = faction_description;
 	}	
+	
 }
