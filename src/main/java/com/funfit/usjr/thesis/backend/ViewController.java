@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,17 +12,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.funfit.usjr.thesis.backend.data.dao.service.AdminDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.EventDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.ImpulseDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.TerritoryDao;
+import com.funfit.usjr.thesis.backend.data.dao.service.UserDao;
 import com.funfit.usjr.thesis.backend.data.dao.service.VelocityDao;
 import com.funfit.usjr.thesis.backend.models.Admin;
 import com.funfit.usjr.thesis.backend.models.Event;
 import com.funfit.usjr.thesis.backend.models.Impulse;
 import com.funfit.usjr.thesis.backend.models.Territory;
+import com.funfit.usjr.thesis.backend.models.Users;
 import com.funfit.usjr.thesis.backend.models.Velocity;
 import com.funfit.usjr.thesis.backend.service.GenerateIdService;
+import com.funfit.usjr.thesis.backend.service.NotificationService;
 import com.funfit.usjr.thesis.backend.utils.CreatePolyline;
 import com.google.maps.model.LatLng;
 
@@ -45,6 +50,12 @@ public class ViewController {
 	
 	@Autowired
 	private TerritoryDao territoryDao;
+	
+	@Autowired
+	private NotificationService notificationService;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	@RequestMapping(value = "/")
@@ -163,8 +174,24 @@ public class ViewController {
 		  	territory.setLevel(0);
 		  	territory.setStatus("uncharted");
 		  	
-		  	territoryDao.create(territory);
-		  	
+		  	boolean flag =territoryDao.create(territory);
+			List<String> items = new ArrayList<>();
+			try{  
+			  	List<Users> userlist = userDao.index();
+			  	for(Users user: userlist){
+			  		items.add(user.getGcmKey());
+		  	if(flag){
+		  		try {
+					notificationService.broadcast(items);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		  	}
+			  	}
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 		return "marker";
 	}
 	
